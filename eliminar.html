@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administracion GAM Colquiri</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    body {
+      padding: 10%;
+      background-color: #c7c7c7;
+      color: #212529;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="mb-4">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a class="nav-link" href="/index.html">Agregar/Adicionar</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/eliminar.html">Eliminar Publicaciones</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <h2 class="mb-4">Lista de Convocatorias</h2>
+  <ul id="convocatorias-list" class="list-group mb-4"></ul>
+
+  <h2 class="mb-4">Lista de Decretos Municipales</h2>
+  <ul id="dm-list" class="list-group mb-4"></ul>
+
+  <h2 class="mb-4">Lista de Resoluciones Municipales</h2>
+  <ul id="rm-list" class="list-group mb-4"></ul>
+
+  <h2 class="mb-4">Lista de Leyes Municipales</h2>
+  <ul id="lm-list" class="list-group mb-4"></ul>
+
+  <script>
+    function cargarListas() {
+      cargarDatos('convocatoria', 'convocatorias-list');
+      cargarDatos('dm', 'dm-list');
+      cargarDatos('rm', 'rm-list');
+      cargarDatos('lm', 'lm-list');
+    }
+    function cargarDatos(endpoint, listId) {
+      fetch(`https://adminicstracioncolquiri.onrender.com/${endpoint}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error al obtener los datos');
+          }
+          return response.json();
+        })
+        .then(data => {
+          const html = data.map(item => {
+            return `
+           <li class="list-group-item d-flex justify-content-between align-items-center">
+             ${item.titulo || item.nro} - ${item.fecha}
+             <button class="btn btn-danger btn-sm" onclick="eliminarItem('${endpoint}', '${item.id}')">Eliminar</button>
+           </li>
+         `;
+          }).join('');
+          document.getElementById(listId).innerHTML = html;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function eliminarItem(endpoint, id) {
+      if (confirm('¿Estás seguro de que deseas eliminar este ítem?')) {
+        fetch(`https://adminicstracioncolquiri.onrender.com/${endpoint}/${id}`, {
+          method: 'DELETE',
+        })
+          .then(response => response.json())
+          .then(data => {
+            alert('Elemento eliminado exitosamente');
+            cargarListas(); // Recargar la lista después de eliminar
+          })
+          .catch(error => console.error('Error:', error));
+      }
+    }
+
+    window.onload = cargarListas;
+  </script>
+</body>
+
+</html>
