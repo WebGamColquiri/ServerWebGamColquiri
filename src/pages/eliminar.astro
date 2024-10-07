@@ -1,0 +1,90 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Welcome to Astro.">
+    <header
+        slot="header"
+        id="header"
+        class="min-h-20 flex justify-center items-center shadow-md p-3"
+    >
+        <nav class="">
+            <ul
+                class="flex md:flex-row flex-col md:gap-20 gap-2 justify-center items-center"
+            >
+                <li class="rounded-2xl bg-gray-300 font-bold text-white p-3">
+                    <a class="p-3" href="/">Agregar/Adicionar</a>
+                </li>
+                <li class="rounded-2xl bg-gray-300 font-bold text-white p-3">
+                    <a class="p-3" href="/noticias">Agregar Noticia</a>
+                </li>
+                <li class="rounded-2xl bg-blue-600 font-bold text-white p-3">
+                    <a class="p-3" href="/eliminar">Eliminar Publicaciones</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="p-3">
+        <h2 class="mb-4">Lista de Convocatorias</h2>
+        <ul id="convocatorias-list" class="list-group mb-4"></ul>
+
+        <h2 class="mb-4">Lista de Decretos Municipales</h2>
+        <ul id="dm-list" class="list-group mb-4"></ul>
+
+        <h2 class="mb-4">Lista de Resoluciones Municipales</h2>
+        <ul id="rm-list" class="list-group mb-4"></ul>
+
+        <h2 class="mb-4">Lista de Leyes Municipales</h2>
+        <ul id="lm-list" class="list-group mb-4"></ul>
+    </div>
+</Layout>
+<script>
+    function cargarListas() {
+        cargarDatos("convocatoria", "convocatorias-list");
+        cargarDatos("dm", "dm-list");
+        cargarDatos("rm", "rm-list");
+        cargarDatos("lm", "lm-list");
+    }
+    function cargarDatos(endpoint, listId) {
+        fetch(`https://adminicstracioncolquiri.onrender.com/${endpoint}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error al obtener los datos");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                const html = data
+                    .map((item) => {
+                        return `
+           <li class="flex justify-between items-center">
+             ${item.titulo || item.nro} - ${item.fecha}
+             <button class="bg-red-500 text-white px-2 py-1 rounded-sm" onclick="eliminarItem('${endpoint}', '${item.id}')">Eliminar</button>
+           </li>
+         `;
+                    })
+                    .join("");
+                document.getElementById(listId).innerHTML = html;
+            })
+            .catch((error) => console.error("Error:", error));
+    }
+
+    function eliminarItem(endpoint, id) {
+        if (confirm("¿Estás seguro de que deseas eliminar este ítem?")) {
+            fetch(
+                `https://adminicstracioncolquiri.onrender.com/${endpoint}/${id}`,
+                {
+                    method: "DELETE",
+                },
+            )
+                .then((response) => response.json())
+                .then((data) => {
+                    alert("Elemento eliminado exitosamente");
+                    cargarListas(); // Recargar la lista después de eliminar
+                })
+                .catch((error) => console.error("Error:", error));
+        }
+    }
+
+    window.onload = cargarListas;
+</script>
