@@ -9,80 +9,84 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <style>
     header {
-      padding:0.75rem;
+      padding: 0.75rem;
     }
-    a{
+
+    a {
       text-decoration: none;
-      color:white;
+      color: white;
     }
-    main{
-  width: 90%;
+
+    main {
+      width: 90%;
       margin: auto;
     }
-    .ulnav{
-        display: flex; 
-flex-direction: column; 
-gap: 0.5rem; 
-justify-content: center; 
-align-items: center; 
+
+    .ulnav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
 
 
-@media (min-width: 768px) { 
-  flex-direction: row; 
-gap: 5rem; 
- }
+      @media (min-width: 768px) {
+        flex-direction: row;
+        gap: 5rem;
+      }
     }
-    .noActive{
-        padding: 0.75rem; 
-border-radius: 1rem; 
-font-weight: 700; 
-color: #ffffff; 
-background-color: #D1D5DB; 
+
+    .noActive {
+      padding: 0.75rem;
+      border-radius: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      background-color: #D1D5DB;
     }
-    .active{
-        padding: 0.75rem; 
-border-radius: 1rem; 
-font-weight: 700; 
-color: #ffffff; 
-background-color: #2563EB; 
+
+    .active {
+      padding: 0.75rem;
+      border-radius: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      background-color: #2563EB;
 
     }
   </style>
 </head>
 
 <body>
-    <header
-    slot="header"
-    id="header"
-    class="min-h-20 flex justify-center items-center shadow-md p-3"
->
+  <header slot="header" id="header" class="min-h-20 flex justify-center items-center shadow-md p-3">
     <nav class="">
-        <ul class="ulnav">
-            <li class="noActive">
-                <a class="p-3" href="/">Agregar/Adicionar</a>
-            </li>
-            <li class="noActive">
-                <a class="p-3" href="/studio">Agregar Noticia</a>
-            </li>
-            <li class="active">
-                <a class="p-3" href="/eliminar">Eliminar Publicaciones</a>
-            </li>
-        </ul>
+      <ul class="ulnav">
+        <li class="noActive">
+          <a class="p-3" href="/">Agregar/Adicionar</a>
+        </li>
+        <li class="noActive">
+          <a class="p-3" href="/studio">Agregar Noticia</a>
+        </li>
+        <li class="active">
+          <a class="p-3" href="/eliminar">Eliminar Publicaciones</a>
+        </li>
+      </ul>
     </nav>
-</header>
-<main>
-  <h2 class="mb-4">Lista de Convocatorias</h2>
-  <ul id="convocatorias-list" class="list-group mb-4"></ul>
+  </header>
+  <main>
+    <h2 class="mb-4">Lista de Convocatorias</h2>
+    <ul id="convocatorias-list" class="list-group mb-4"></ul>
 
-  <h2 class="mb-4">Lista de Decretos Municipales</h2>
-  <ul id="dm-list" class="list-group mb-4"></ul>
+    <h2 class="mb-4">Lista de Decretos Municipales</h2>
+    <ul id="dm-list" class="list-group mb-4"></ul>
 
-  <h2 class="mb-4">Lista de Resoluciones Municipales</h2>
-  <ul id="rm-list" class="list-group mb-4"></ul>
+    <h2 class="mb-4">Lista de Resoluciones Municipales</h2>
+    <ul id="rm-list" class="list-group mb-4"></ul>
 
-  <h2 class="mb-4">Lista de Leyes Municipales</h2>
-  <ul id="lm-list" class="list-group mb-4"></ul>
-</main>
+    <h2 class="mb-4">Lista de Leyes Municipales</h2>
+    <ul id="lm-list" class="list-group mb-4"></ul>
+
+    <h2 class="mb-4">Lista de Transparencia</h2>
+    <ul id="transparencia-list" class="list-group mb-4"></ul>
+  </main>
 
   <script>
     function cargarListas() {
@@ -90,6 +94,8 @@ background-color: #2563EB;
       cargarDatos('dm', 'dm-list');
       cargarDatos('rm', 'rm-list');
       cargarDatos('lm', 'lm-list');
+      cargarDatos('transparencia', 'transparencia-list');
+      
     }
     function cargarDatos(endpoint, listId) {
       fetch(`https://adminicstracioncolquiri.onrender.com/${endpoint}`)
