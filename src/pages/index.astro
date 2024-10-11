@@ -410,6 +410,102 @@ import Layout from "../layouts/Layout.astro";
 				</form>
 			</div>
 		</div>
+		<h2 id="accordion-collapse-heading-4">
+			<button
+				type="button"
+				class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
+				data-accordion-target="#accordion-collapse-body-5"
+				aria-expanded="false"
+				aria-controls="accordion-collapse-body-5"
+			>
+				<span>Subir nuevo documento de "Transparencia"</span>
+				<svg
+					data-accordion-icon
+					class="w-3 h-3 rotate-180 shrink-0"
+					aria-hidden="true"
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 10 6"
+				>
+					<path
+						stroke="currentColor"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M9 5 5 1 1 5"></path>
+				</svg>
+			</button>
+		</h2>
+		<div
+			id="accordion-collapse-body-5"
+			class="hidden p-3"
+			aria-labelledby="accordion-collapse-heading-4"
+		>
+			<div class="w-[90%] m-auto">
+				<h2 class="text-center font-bold text-3xl">
+					Subir nuevo documento de "transparencia"
+				</h2>
+				<form
+					action="https://adminicstracioncolquiri.onrender.com/transparencia"
+					method="post"
+					enctype="multipart/form-data"
+				>
+					<div class="mb-3">
+						<label for="titulo" class="form-label"
+							>Titulo de nueva Transparencia</label
+						>
+						<input
+							name="titulo"
+							type="text"
+							class="form-control"
+							id="titulo"
+							aria-describedby="textHelp"
+							placeholder="titulo..."
+							required
+						/>
+					</div>
+					<div class="mb-3">
+						<label for="fecha" class="form-label">Fecha</label>
+						<input
+							name="fecha"
+							type="date"
+							class="form-control"
+							id="fecha"
+							required
+						/>
+					</div>
+					<div class="mb-3">
+						<label for="descripcion" class="form-label"
+							>Descripcion</label
+						>
+						<input
+							name="descripcion"
+							type="text"
+							class="form-control"
+							id="descripcion"
+							placeholder="Introducir nueva ley "
+							required
+						/>
+					</div>
+					<div class="mb-3">
+						<label for="archivo" class="form-label"
+							>Seleccionar PDF para subir</label
+						>
+						<input
+							type="file"
+							name="archivo"
+							accept="application/pdf"
+							class="form-control"
+							id="archivo"
+							required
+						/>
+					</div>
+					<button type="submit" class="btn btn-primary"
+						>Subir Nueva Transparencia</button
+					>
+				</form>
+			</div>
+		</div>
 	</div>
 </Layout>
 <style>
