@@ -6,8 +6,9 @@ import { postType } from "./post";
 import { auditorias } from "./auditorias";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [postType, auditorias],
+  types: [postType,blockContentType, auditorias],
 
 };
+
 
 
